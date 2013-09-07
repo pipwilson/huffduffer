@@ -112,7 +112,7 @@ public class MainActivity extends ListActivity {
                 // Add your data
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("login[username]", "pip"));
-                nameValuePairs.add(new BasicNameValuePair("login[password]", "huffduffer"));
+                nameValuePairs.add(new BasicNameValuePair("login[password]", ""));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 // Execute HTTP Post Request
