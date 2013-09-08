@@ -13,14 +13,6 @@ import android.view.ViewConfiguration;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.philwilson.huffduffer.AtomFeedParser.Entry;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -37,6 +29,8 @@ import java.util.List;
 
 public class MainActivity extends ListActivity {
 
+    // HUFFDUFFER URL constants
+	private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
     private static final String HUFFDUFFER_COLLECTIVE_FEED = "http://huffduffer.com/pip/collective/atom";
 
     @Override
@@ -69,17 +63,16 @@ public class MainActivity extends ListActivity {
         return true;
     }
 
-    // from a button
-//    public void refreshHuffdufferCollectiveList(View view) {
-//        // new LoginHuffduffer().execute();
-//		Toast.makeText(MainActivity.this, getFilesDir().getAbsolutePath(), Toast.LENGTH_SHORT).show();
-//        //new RefreshHuffdufferCollectiveTask().execute(HUFFDUFFER_COLLECTIVE_FEED);
-//    }
 
-    // from a menu item
+    // refresh generic new items feed, triggered by a menu item
+    public boolean refreshHuffdufferNewItemsList(MenuItem menuItem) {
+        new RefreshHuffdufferURLTask().execute(HUFFDUFFER_NEW_FILES_FEED);
+        return true;
+    }
+
+    // refresh collective, triggered by a menu item
     public boolean refreshHuffdufferCollectiveList(MenuItem menuItem) {
-        // new LoginHuffduffer().execute();
-        new RefreshHuffdufferCollectiveTask().execute(HUFFDUFFER_COLLECTIVE_FEED);
+        new RefreshHuffdufferURLTask().execute(HUFFDUFFER_COLLECTIVE_FEED);
         //Toast.makeText(MainActivity.this, getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_SHORT).show();
         return true;
     }
@@ -93,46 +86,8 @@ public class MainActivity extends ListActivity {
         return false;
     }
 
-    private class LoginHuffduffer extends AsyncTask<String, Void, Boolean> {
 
-        private String status = "";
-
-        protected void onPostExecute(Boolean result) {
-            Toast.makeText(MainActivity.this, status, Toast.LENGTH_SHORT).show();
-        }
-
-        protected Boolean doInBackground(String... args) {
-
-            // http://www.androidsnippets.com/executing-a-http-post-request-with-httpclient
-            // Create a new HttpClient and Post Header
-            HttpClient httpclient = new DefaultHttpClient();
-            HttpPost httppost = new HttpPost("http://huffduffer.com/login");
-
-            try {
-                // Add your data
-                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("login[username]", "pip"));
-                nameValuePairs.add(new BasicNameValuePair("login[password]", ""));
-                httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                // Execute HTTP Post Request
-                HttpResponse response = httpclient.execute(httppost);
-
-                // TextView txtView = (TextView)
-                // findViewById(R.id.mainactivity_txtview);
-                // txtView.setText(response.getStatusLine().getStatusCode());
-                this.status = ((Integer) response.getStatusLine().getStatusCode()).toString();
-                return true;
-
-            } catch (ClientProtocolException e) {
-                return false;
-            } catch (IOException e) {
-                return false;
-            }
-        }
-    }
-
-    private class RefreshHuffdufferCollectiveTask extends AsyncTask<String, Void, String> {
+    private class RefreshHuffdufferURLTask extends AsyncTask<String, Void, String> {
 
         private static final String TAG = "HUFFDUFFER_REFRESH";
         private ArrayList<String> titles;
@@ -164,14 +119,17 @@ public class MainActivity extends ListActivity {
                     return "no network";
                 }
 
-            } catch (IOException e) {
-                log(e.getMessage());
-                e.printStackTrace();
-                return e.getMessage();
-            } catch (XmlPullParserException e) {
-                log(e.getMessage());
-                e.printStackTrace();
-                return e.getMessage();
+            } catch (FileNotFoundException fnfe) {
+                log(fnfe.getMessage());
+                return fnfe.getMessage();
+            } catch (IOException ioe) {
+                log(ioe.getMessage());
+                ioe.printStackTrace();
+                return ioe.getMessage();
+            } catch (XmlPullParserException xppe) {
+                log(xppe.getMessage());
+                xppe.printStackTrace();
+                return xppe.getMessage();
             }
         }
 
