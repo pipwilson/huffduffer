@@ -2,7 +2,7 @@
 
     <item
             android:id="@+id/action_refresh"
-            android:onClick="refreshHuffdufferCollectiveList"
+            android:onClick="refreshHuffdufferNewItemsList"
             android:orderInCategory="100"
             android:showAsAction="always"
             android:title="@string/action_refresh"
