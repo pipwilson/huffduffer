@@ -10,11 +10,12 @@ import android.view.ViewConfiguration;
 
 public class MainActivity extends ListActivity {
 
-	// Toasts look like this:
-    // Toast.makeText(MainActivity.this, getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_SHORT).show();
-	
+    // Toasts look like this:
+    // Toast.makeText(MainActivity.this,
+    // getExternalFilesDir(null).getAbsolutePath(), Toast.LENGTH_SHORT).show();
+
     // HUFFDUFFER URL constants
-	private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
+    private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
     private static final String HUFFDUFFER_COLLECTIVE_FEED = "http://huffduffer.com/pip/collective/atom";
 
     @Override
@@ -47,10 +48,9 @@ public class MainActivity extends ListActivity {
         return true;
     }
 
-
     // refresh generic new items feed, triggered by a menu item
     public boolean refreshHuffdufferNewItemsList(MenuItem menuItem) {
-    	// TODO do we need to deal with the return from doInBackground()?
+        // TODO do we need to deal with the return from doInBackground()?
         new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);
         return true;
     }
@@ -64,9 +64,11 @@ public class MainActivity extends ListActivity {
     // handle select list item action from collective item list
     public boolean showItemDetail(MenuItem menuItem) {
         // TODO implement it!
-        // Make sure we store the collective feed as an internal data structure when we retrieve
+        // Make sure we store the collective feed as an internal data structure
+        // when we retrieve
         // it and then just use index of menu as index into data structure.
-        // Display Title, Description, Duration (if available) and button to Huffduff This.
+        // Display Title, Description, Duration (if available) and button to
+        // Huffduff This.
         return false;
     }
 
