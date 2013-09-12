@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <EditTextPreference
+        android:key="username"
+        android:summary="Your username"
+        android:title="Huffduffer Username" />
+    
+    <EditTextPreference
+        android:key="password"
+        android:password="true"
+        android:summary="Your password"
+        android:title="Huffduffer Password" />
+
+</PreferenceScreen>
