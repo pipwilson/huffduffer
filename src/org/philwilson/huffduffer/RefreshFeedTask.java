@@ -49,7 +49,7 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
         log("in doInBackground");
         try {
             // returns null if successful
-            return loadXmlFromNetwork(urls[0]);
+            return fetchFeed(urls[0]);
         } catch (FileNotFoundException fnfe) {
             log(fnfe.getMessage());
             return fnfe.getMessage();
@@ -65,8 +65,8 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
     }
 
     // Retrieves a huffduffer feed and parses it
-    private String loadXmlFromNetwork(String urlString) throws XmlPullParserException, IOException {
-        log("loading XML from network");
+    private String fetchFeed(String urlString) throws XmlPullParserException, IOException {
+        Log.d(TAG, "in fetchFeed");
         InputStream stream = null;
 
         // Instantiate the parser
@@ -102,6 +102,7 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
     // Given a string representation of a URL, sets up a connection and gets
     // an input stream.
     private InputStream downloadUrl(String urlString) throws IOException {
+        Log.d(TAG, "downloading URL");
         if (Utils.isConnectedToNetwork(parentActivity)) {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -123,7 +124,7 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String result) {
         parentActivity.setContentView(R.layout.activity_main);
-        if (titles != null & titles.size() > 0) {
+        if (titles != null && titles.size() > 0) {
             ArrayAdapter<String> adapter = new ArrayAdapter<String>(parentActivity, R.layout.list_item, R.id.label,
                     titles);
             ((ListActivity) parentActivity).setListAdapter(adapter);
