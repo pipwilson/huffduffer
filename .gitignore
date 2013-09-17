@@ -1,1 +1,4 @@
 /bin
+/gen
+/out
+/change-git-author-history.sh
