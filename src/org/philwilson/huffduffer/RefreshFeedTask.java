@@ -1,8 +1,6 @@
 package org.philwilson.huffduffer;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -14,51 +12,34 @@ import org.philwilson.huffduffer.AtomFeedParser.Entry;
 import org.xmlpull.v1.XmlPullParserException;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ArrayAdapter;
 
 public class RefreshFeedTask extends AsyncTask<String, Void, String> {
 
     private static final String TAG = "HUFFDUFFER_REFRESH";
-    private ArrayList<String> titles;
+    private static ArrayList<String> titles = new ArrayList<String>();
     private Activity parentActivity;
 
     RefreshFeedTask(Activity a) {
         parentActivity = a;
     }
 
-    private void log(String message) {
-        String FILENAME = "huffduffer.log";
-
-        try {
-            File file = new File(parentActivity.getExternalFilesDir(null), FILENAME);
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(message.getBytes());
-            fos.close();
-        } catch (FileNotFoundException e) {
-        } catch (IOException ioe) {
-        }
-
-        Log.d(TAG, message);
-    }
-
     @Override
     protected String doInBackground(String... urls) {
-        log("in doInBackground");
+        Log.d(TAG, "in doInBackground");
         try {
             // returns null if successful
             return fetchFeed(urls[0]);
         } catch (FileNotFoundException fnfe) {
-            log(fnfe.getMessage());
+            Log.d(TAG, fnfe.getMessage());
             return fnfe.getMessage();
         } catch (IOException ioe) {
-            log(ioe.getMessage());
+            Log.d(TAG, ioe.getMessage());
             ioe.printStackTrace();
             return ioe.getMessage();
         } catch (XmlPullParserException xppe) {
-            log(xppe.getMessage());
+            Log.d(TAG, xppe.getMessage());
             xppe.printStackTrace();
             return xppe.getMessage();
         }
@@ -78,10 +59,10 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
             entries = feedParser.parse(stream);
 
             if (entries != null && entries.size() > 0) {
-                titles = new ArrayList<String>(entries.size());
+                setTitles(new ArrayList<String>(entries.size()));
 
                 for (Entry entry : entries) {
-                    titles.add(entry.title);
+                    getTitles().add(entry.title);
                 }
                 Log.d(TAG, "Everything has gone wonderfully.");
 
@@ -119,16 +100,16 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
 
     }
 
-    // update the listview with the data we got from huffduffer.com
-    // TODO: else provide an error message
-    @Override
-    protected void onPostExecute(String result) {
-        parentActivity.setContentView(R.layout.activity_main);
-        if (titles != null && titles.size() > 0) {
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(parentActivity, R.layout.list_item, R.id.label,
-                    titles);
-            ((ListActivity) parentActivity).setListAdapter(adapter);
-        }
-
+    public static ArrayList<String> getTitles() {
+        return titles;
     }
+
+    public static void setTitles(ArrayList<String> titles) {
+        RefreshFeedTask.titles = titles;
+    }
+
+    protected void onPostExecute(String result) {
+        ((ItemListActivity) parentActivity).updateTitles();
+    }
+    
 }

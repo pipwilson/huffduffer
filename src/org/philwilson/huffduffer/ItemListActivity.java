@@ -1,8 +1,13 @@
 package org.philwilson.huffduffer;
 
+import org.philwilson.huffduffer.dummy.DummyContent;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 
 /**
  * An activity representing a list of Items. This activity has different
@@ -21,6 +26,8 @@ import android.support.v4.app.FragmentActivity;
  */
 public class ItemListActivity extends FragmentActivity implements ItemListFragment.Callbacks {
 
+    private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
+    
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
      * device.
@@ -71,5 +78,35 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
             detailIntent.putExtra(ItemDetailFragment.ARG_ITEM_ID, id);
             startActivity(detailIntent);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    public void updateTitles() {
+        ItemListFragment itemListFragment = (ItemListFragment)getSupportFragmentManager().findFragmentById(R.id.item_list);
+        itemListFragment.setListAdapter(new ArrayAdapter<String>(itemListFragment.getActivity(),
+                android.R.layout.simple_list_item_activated_1, android.R.id.text1, RefreshFeedTask.getTitles()));        
+    }
+    
+    // refresh generic new items feed, triggered by a menu item
+    public boolean refreshHuffdufferNewItemsList(MenuItem menuItem) {
+        // TODO do we need to deal with the return from doInBackground()?
+        new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);
+        
+        /*
+         * ItemListFragment itemListFragment =
+         * (ItemListFragment)getSupportFragmentManager
+         * ().findFragmentById(R.id.item_list);
+         * itemListFragment.setListAdapter(new
+         * ArrayAdapter<String>(itemListFragment.getActivity(),
+         * android.R.layout.simple_list_item_activated_1, android.R.id.text1,
+         * RefreshFeedTask.getTitles()));
+         */        
+        return true;
     }
 }
