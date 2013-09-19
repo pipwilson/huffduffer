@@ -52,10 +52,10 @@
         <activity
             android:name="org.philwilson.huffduffer.SettingsActivity"
             android:label="@string/title_activity_settings"
-            android:parentActivityName="org.philwilson.huffduffer.MainActivity" >
+            android:parentActivityName="org.philwilson.huffduffer.ItemListActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="org.philwilson.huffduffer.MainActivity" />
+                android:value="org.philwilson.huffduffer.ItemListActivity" />
         </activity>
         <activity
             android:name="org.philwilson.huffduffer.ItemListActivity"

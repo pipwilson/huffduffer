@@ -87,6 +87,11 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
         return true;
     }
 
+    public boolean showSettingsScreen(MenuItem menuItem) {
+        startActivity(new Intent(this, SettingsActivity.class));
+        return true;
+    }
+    
     public void updateTitles() {
         ItemListFragment itemListFragment = (ItemListFragment)getSupportFragmentManager().findFragmentById(R.id.item_list);
         itemListFragment.setListAdapter(new ArrayAdapter<String>(itemListFragment.getActivity(),
