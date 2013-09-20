@@ -101,17 +101,7 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
     // refresh generic new items feed, triggered by a menu item
     public boolean refreshHuffdufferNewItemsList(MenuItem menuItem) {
         // TODO do we need to deal with the return from doInBackground()?
-        new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);
-        
-        /*
-         * ItemListFragment itemListFragment =
-         * (ItemListFragment)getSupportFragmentManager
-         * ().findFragmentById(R.id.item_list);
-         * itemListFragment.setListAdapter(new
-         * ArrayAdapter<String>(itemListFragment.getActivity(),
-         * android.R.layout.simple_list_item_activated_1, android.R.id.text1,
-         * RefreshFeedTask.getTitles()));
-         */        
+        new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);           
         return true;
     }
 }
