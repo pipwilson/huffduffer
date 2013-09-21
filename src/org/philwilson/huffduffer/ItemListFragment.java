@@ -1,6 +1,6 @@
 package org.philwilson.huffduffer;
 
-import org.philwilson.huffduffer.dummy.TheDummyContent;
+import org.philwilson.huffduffer.dummy.DummyContent;
 
 import android.app.Activity;
 import android.os.Bundle;
