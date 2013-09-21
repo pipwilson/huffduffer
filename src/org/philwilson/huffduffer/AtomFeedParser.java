@@ -49,12 +49,14 @@ public class AtomFeedParser {
     // This class represents a single entry (post) in the XML feed.
     // It includes the data members "title," "link," and "summary."
     public static class Entry {
+        public final String id;
         public final String title;
         public final String link;
         public final String summary;
         public final String authorName;
 
-        private Entry(String title, String summary, String link, String authorName) {
+        private Entry(String id, String title, String summary, String link, String authorName) {
+            this.id = id;
             this.title = title;
             this.summary = summary;
             this.link = link;
@@ -69,6 +71,7 @@ public class AtomFeedParser {
     // skips the tag.
     private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "entry");
+        String id = null;
         String title = null;
         String summary = null;
         String tempLink = null;
@@ -79,7 +82,9 @@ public class AtomFeedParser {
                 continue;
             }
             String elementName = parser.getName();
-            if (elementName.equals("title")) {
+            if (elementName.equals("id")) {
+                id = readId(parser);
+            } else if (elementName.equals("title")) {
                 title = readTitle(parser);
             } else if (elementName.equals("name")) {
                 name = readName(parser);
@@ -94,7 +99,14 @@ public class AtomFeedParser {
                 skip(parser);
             }
         }
-        return new Entry(title, summary, link, name);
+        return new Entry(id, title, summary, link, name);
+    }
+
+    private String readId(XmlPullParser parser) throws IOException, XmlPullParserException {
+        parser.require(XmlPullParser.START_TAG, ns, "id");
+        String id = readText(parser);
+        parser.require(XmlPullParser.END_TAG, ns, "id");
+        return id;
     }
 
     // Processes title tags in the feed.

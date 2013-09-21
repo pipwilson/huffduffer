@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import org.philwilson.huffduffer.dummy.DummyContent;
-
 /**
  * A list fragment representing a list of Items. This fragment also supports
  * tablet devices by allowing list items to be given an 'activated' state upon
@@ -25,6 +23,8 @@ public class ItemListFragment extends ListFragment {
      * activated item position. Only used on tablets.
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
+
+    private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -70,9 +70,16 @@ public class ItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        new RefreshFeedTask(getActivity()).execute(HUFFDUFFER_NEW_FILES_FEED);
+
+        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1,
+                android.R.id.text1, RefreshFeedTask.getTitles()));
+
         // TODO: replace with a real list adapter.
-        setListAdapter(new ArrayAdapter<DummyContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_activated_1, android.R.id.text1, DummyContent.ITEMS));
+        // setListAdapter(new
+        // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
+        // DummyContent.ITEMS));
     }
 
     @Override
@@ -111,7 +118,8 @@ public class ItemListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        //mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(RefreshFeedTask.getTitles().get(position));
     }
 
     @Override
