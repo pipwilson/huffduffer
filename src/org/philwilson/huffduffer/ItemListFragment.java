@@ -1,5 +1,7 @@
 package org.philwilson.huffduffer;
 
+import org.philwilson.huffduffer.dummy.TheDummyContent;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -72,14 +74,14 @@ public class ItemListFragment extends ListFragment {
 
         new RefreshFeedTask(getActivity()).execute(HUFFDUFFER_NEW_FILES_FEED);
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_activated_1,
-                android.R.id.text1, RefreshFeedTask.getTitles()));
+        setListAdapter(new ArrayAdapter<AtomFeedParser.Entry>(getActivity(),
+                android.R.layout.simple_list_item_activated_1, android.R.id.text1, AtomFeedParser.ITEMS));
 
         // TODO: replace with a real list adapter.
         // setListAdapter(new
-        // ArrayAdapter<DummyContent.DummyItem>(getActivity(),
+        // ArrayAdapter<TheDummyContent.DummyItem>(getActivity(),
         // android.R.layout.simple_list_item_activated_1, android.R.id.text1,
-        // DummyContent.ITEMS));
+        // TheDummyContent.ITEMS));
     }
 
     @Override
@@ -118,8 +120,8 @@ public class ItemListFragment extends ListFragment {
 
         // Notify the active callbacks interface (the activity, if the
         // fragment is attached to one) that an item has been selected.
-        //mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
-        mCallbacks.onItemSelected(RefreshFeedTask.getTitles().get(position));
+        // mCallbacks.onItemSelected(DummyContent.ITEMS.get(position).id);
+        mCallbacks.onItemSelected(AtomFeedParser.ITEMS.get(position).id);
     }
 
     @Override

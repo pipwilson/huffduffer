@@ -92,8 +92,8 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
     
     public void updateTitles() {
         ItemListFragment itemListFragment = (ItemListFragment)getSupportFragmentManager().findFragmentById(R.id.item_list);
-        itemListFragment.setListAdapter(new ArrayAdapter<String>(itemListFragment.getActivity(),
-                android.R.layout.simple_list_item_activated_1, android.R.id.text1, RefreshFeedTask.getTitles()));        
+        itemListFragment.setListAdapter(new ArrayAdapter<AtomFeedParser.Entry>(itemListFragment.getActivity(),
+                android.R.layout.simple_list_item_activated_1, android.R.id.text1, AtomFeedParser.ITEMS));        
     }
     
     // refresh generic new items feed, triggered by a menu item

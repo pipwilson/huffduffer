@@ -1,19 +1,24 @@
 package org.philwilson.huffduffer;
 
-import android.util.Xml;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Xml;
 
 public class AtomFeedParser {
-    private static final String ns = null;
 
     // We don't use namespaces
+    private static final String ns = null;
+
+    public static List<Entry> ITEMS = new ArrayList<Entry>();
+    public static Map<String, Entry> ITEM_MAP = new HashMap<String, Entry>();
 
     public List<Entry> parse(InputStream in) throws XmlPullParserException, IOException {
         try {
@@ -28,7 +33,6 @@ public class AtomFeedParser {
     }
 
     private List<Entry> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
-        List<Entry> entries = new ArrayList<Entry>();
 
         parser.require(XmlPullParser.START_TAG, ns, "feed");
         while (parser.next() != XmlPullParser.END_TAG) {
@@ -38,12 +42,14 @@ public class AtomFeedParser {
             String name = parser.getName();
             // Starts by looking for the entry tag
             if (name.equals("entry")) {
-                entries.add(readEntry(parser));
+                Entry entry = readEntry(parser);
+                ITEMS.add(entry);
+                ITEM_MAP.put(entry.getId(), entry);
             } else {
                 skip(parser);
             }
         }
-        return entries;
+        return ITEMS;
     }
 
     // This class represents a single entry (post) in the XML feed.
@@ -55,12 +61,21 @@ public class AtomFeedParser {
         public final String summary;
         public final String authorName;
 
-        private Entry(String id, String title, String summary, String link, String authorName) {
+        public Entry(String id, String title, String summary, String link, String authorName) {
             this.id = id;
             this.title = title;
             this.summary = summary;
             this.link = link;
             this.authorName = authorName;
+        }
+        
+        public String getId() {
+            return this.id;
+        }
+        
+        @Override        
+        public String toString() {
+            return this.title;
         }
     }
 
