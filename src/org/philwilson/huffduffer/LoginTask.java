@@ -24,6 +24,9 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
     private Activity parentActivity;
     private boolean isLoggedIn = false;
 
+    private String USER_USERNAME;
+    private String USER_PASSWORD;    
+    
     public LoginTask(Activity a) {
         parentActivity = a;
     }
@@ -46,8 +49,8 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
             try {
                 // Add your data
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("login[username]", "pip"));
-                nameValuePairs.add(new BasicNameValuePair("login[password]", "huffduffer"));
+                nameValuePairs.add(new BasicNameValuePair("login[username]", USER_USERNAME));                
+                nameValuePairs.add(new BasicNameValuePair("login[password]", USER_PASSWORD));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 // Execute HTTP Post Request
