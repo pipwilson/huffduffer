@@ -67,15 +67,5 @@ public class MainActivity extends ListActivity {
         return true;
     }
 
-    // handle select list item action from collective item list
-    public boolean showItemDetail(MenuItem menuItem) {
-        // TODO implement it!
-        // Make sure we store the collective feed as an internal data structure
-        // when we retrieve
-        // it and then just use index of menu as index into data structure.
-        // Display Title, Description, Duration (if available) and button to
-        // Huffduff This.
-        return false;
-    }
 
 }
