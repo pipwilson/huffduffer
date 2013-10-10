@@ -34,6 +34,9 @@ public class AtomFeedParser {
 
     private List<Entry> readFeed(XmlPullParser parser) throws XmlPullParserException, IOException {
 
+        // empty the ITEMS list
+        ITEMS.clear();
+
         parser.require(XmlPullParser.START_TAG, ns, "feed");
         while (parser.next() != XmlPullParser.END_TAG) {
             if (parser.getEventType() != XmlPullParser.START_TAG) {
