@@ -40,6 +40,8 @@ public class ItemDetailFragment extends Fragment {
             // arguments. In a real-world scenario, use a Loader
             // to load content from a content provider.
             mItem = AtomFeedParser.ITEM_MAP.get(getArguments().getString(ARG_ITEM_ID));
+
+            getActivity().setTitle(mItem.title);
         }
     }
 
