@@ -24,7 +24,7 @@ public class ItemListFragment extends ListFragment {
      */
     private static final String STATE_ACTIVATED_POSITION = "activated_position";
 
-    private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
+    //private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
 
     /**
      * The fragment's current callback object, which is notified of list item
@@ -70,7 +70,7 @@ public class ItemListFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        new RefreshFeedTask(getActivity()).execute(HUFFDUFFER_NEW_FILES_FEED);
+        //new RefreshFeedTask(getActivity()).execute(HUFFDUFFER_NEW_FILES_FEED);
 
         setListAdapter(new ArrayAdapter<AtomFeedParser.Entry>(getActivity(),
                 android.R.layout.simple_list_item_activated_1, android.R.id.text1, AtomFeedParser.ITEMS));

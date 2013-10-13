@@ -24,7 +24,7 @@ import android.widget.ArrayAdapter;
  */
 public class ItemListActivity extends FragmentActivity implements ItemListFragment.Callbacks {
 
-    private static final String HUFFDUFFER_NEW_FILES_FEED = "http://huffduffer.com/new/atom";
+    private static final String HUFFDUFFER_POPULAR_FILES_FEED = "http://huffduffer.com/popular/atom";
     
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -35,6 +35,9 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        new RefreshFeedTask(this).execute((HUFFDUFFER_POPULAR_FILES_FEED));
+        
         setContentView(R.layout.activity_item_list);
 
         if (findViewById(R.id.item_detail_container) != null) {
@@ -96,10 +99,13 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
                 android.R.layout.simple_list_item_activated_1, android.R.id.text1, AtomFeedParser.ITEMS));        
     }
     
+    // https://developer.android.com/guide/topics/ui/menus.html
+    
     // refresh generic new items feed, triggered by a menu item
     public boolean refreshHuffdufferNewItemsList(MenuItem menuItem) {
         // TODO do we need to deal with the return from doInBackground()?
-        new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);           
+        new RefreshFeedTask(this).execute(HUFFDUFFER_POPULAR_FILES_FEED);           
         return true;
     }
+    
 }

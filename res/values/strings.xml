@@ -8,7 +8,7 @@
     <!-- <string name="collective_title">Your collective</string> -->
     <!-- <string name="collective_updated">Last updated</string> -->
 
-    <string name="title_item_list">Items</string>
+    <string name="title_item_list">Popular items</string>
     <string name="title_item_detail">Item Detail</string>
 
 </resources>
