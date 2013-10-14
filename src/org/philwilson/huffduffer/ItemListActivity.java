@@ -37,6 +37,7 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
         super.onCreate(savedInstanceState);
         
         new RefreshFeedTask(this).execute((HUFFDUFFER_POPULAR_FILES_FEED));
+        this.setTitle(R.string.title_item_list);
         
         setContentView(R.layout.activity_item_list);
 
