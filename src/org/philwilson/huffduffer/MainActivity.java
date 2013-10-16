@@ -61,7 +61,6 @@ public class MainActivity extends ListActivity {
         new RefreshFeedTask(this).execute(HUFFDUFFER_NEW_FILES_FEED);
         return true;
     }    
-
     // refresh collective, triggered by a menu item
     public boolean refreshHuffdufferCollectiveList(MenuItem menuItem) {
         new RefreshFeedTask(this).execute(HUFFDUFFER_COLLECTIVE_FEED);
