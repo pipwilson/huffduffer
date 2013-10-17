@@ -14,7 +14,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -23,9 +25,6 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
     private static final String TAG = "HUFFDUFFER_LOGIN";
     private Activity parentActivity;
     private boolean isLoggedIn = false;
-
-    private String USER_USERNAME;
-    private String USER_PASSWORD;    
     
     public LoginTask(Activity a) {
         parentActivity = a;
@@ -47,18 +46,19 @@ public class LoginTask extends AsyncTask<String, Void, Boolean> {
             HttpClient httpclient = new DefaultHttpClient();
             HttpPost httppost = new HttpPost("http://huffduffer.com/login");
             try {
+                // get the saved username and password
+                SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(parentActivity);
+                String username = sharedPref.getString("username", "");
+                String password = sharedPref.getString("password", "");
+                
                 // Add your data
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("login[username]", USER_USERNAME));                
-                nameValuePairs.add(new BasicNameValuePair("login[password]", USER_PASSWORD));
+                nameValuePairs.add(new BasicNameValuePair("login[username]", username));                
+                nameValuePairs.add(new BasicNameValuePair("login[password]", password));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
                 // Execute HTTP Post Request
                 HttpResponse response = httpclient.execute(httppost);
-
-                // TextView txtView = (TextView)
-                // findViewById(R.id.mainactivity_txtview);
-                // txtView.setText(response.getStatusLine().getStatusCode());
 
                 // TODO: is this enough?
                 int responseStatus = response.getStatusLine().getStatusCode();
