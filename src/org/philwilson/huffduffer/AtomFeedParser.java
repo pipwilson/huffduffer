@@ -17,6 +17,8 @@ public class AtomFeedParser {
     // We don't use namespaces
     private static final String ns = null;
 
+    // TODO after population cache these collections so items can be displayed on app load when it 
+    // was left on a detail page
     public static List<Entry> ITEMS = new ArrayList<Entry>();
     public static Map<String, Entry> ITEM_MAP = new HashMap<String, Entry>();
 
@@ -47,6 +49,7 @@ public class AtomFeedParser {
             if (name.equals("entry")) {
                 Entry entry = readEntry(parser);
                 ITEMS.add(entry);
+                // TODO replace this by the ID huffduffer uses
                 ITEM_MAP.put(entry.getId(), entry);
             } else {
                 skip(parser);

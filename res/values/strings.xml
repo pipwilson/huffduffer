@@ -8,5 +8,7 @@
     <string name="title_item_list">Popular items</string>
     <string name="title_item_detail">Item Detail</string>
     <string name="action_collective">My collective</string>
+    
+    <string name="send_to_huffduffer">Huffduff this</string>
 
 </resources>

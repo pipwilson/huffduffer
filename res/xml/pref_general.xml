@@ -4,12 +4,12 @@
     <EditTextPreference
         android:key="username"
         android:summary="Your username"
-        android:title="Huffduffer Username" />
+        android:title="Huffduffer username" />
     
     <EditTextPreference
         android:key="password"
         android:password="true"
         android:summary="Your password"
-        android:title="Huffduffer Password" />
+        android:title="Huffduffer password" />
 
 </PreferenceScreen>
