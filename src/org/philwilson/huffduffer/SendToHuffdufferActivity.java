@@ -1,8 +1,8 @@
 package org.philwilson.huffduffer;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.content.Intent;
+import android.os.Bundle;
 
 public class SendToHuffdufferActivity extends Activity {
 
@@ -10,13 +10,16 @@ public class SendToHuffdufferActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_send_to_huffduffer);
+        
+        Bundle extras = this.getIntent().getExtras();
+        
+        String url = extras.getString(Intent.EXTRA_TEXT); // URL
+        String title = extras.getString(Intent.EXTRA_SUBJECT); // Page title 
+        
+        if (title==null) {
+            title = url;
+        }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.send_to_huffduffer, menu);
-        return true;
-    }
 
 }

@@ -24,11 +24,11 @@
             android:label="@string/send_to_huffduffer" >
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
-
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="text/plain" />
                 <data android:mimeType="text/html" />
+                <data android:mimeType="audio/mpeg" />
             </intent-filter>
         </activity>
         <activity
