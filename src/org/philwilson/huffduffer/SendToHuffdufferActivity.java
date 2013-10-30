@@ -3,6 +3,7 @@ package org.philwilson.huffduffer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
 
 public class SendToHuffdufferActivity extends Activity {
 
@@ -16,9 +17,12 @@ public class SendToHuffdufferActivity extends Activity {
         String url = extras.getString(Intent.EXTRA_TEXT); // URL
         String title = extras.getString(Intent.EXTRA_SUBJECT); // Page title 
         
-        if (title==null) {
+        if (title == null) {
             title = url;
         }
+        
+        EditText urlEditText = (EditText)findViewById(R.id.send_to_huffduffer_url);
+        urlEditText.setText(url);
     }
 
 
