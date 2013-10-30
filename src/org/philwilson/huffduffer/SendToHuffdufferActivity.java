@@ -23,6 +23,9 @@ public class SendToHuffdufferActivity extends Activity {
         
         EditText urlEditText = (EditText)findViewById(R.id.send_to_huffduffer_url);
         urlEditText.setText(url);
+        
+        EditText titleEditText = (EditText)findViewById(R.id.send_to_huffduffer_title);
+        titleEditText.setText(title);        
     }
 
 

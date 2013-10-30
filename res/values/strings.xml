@@ -10,6 +10,7 @@
     <string name="send_to_huffduffer">Huffduff this</string>
 
     <string name="send_to_huffduffer_url">URL</string>
+    <string name="send_to_huffduffer_title">Title</string>
     
     
 </resources>

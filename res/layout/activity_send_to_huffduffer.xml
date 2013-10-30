@@ -16,4 +16,12 @@
         android:layout_height="wrap_content"
         android:singleLine="true" />
 
+        <EditText
+        android:id="@+id/send_to_huffduffer_title"
+        android:inputType="textUri"
+        android:hint="@string/send_to_huffduffer_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:singleLine="true" />
+    
 </RelativeLayout>
