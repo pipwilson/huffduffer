@@ -11,6 +11,7 @@
 
     <string name="send_to_huffduffer_url">URL</string>
     <string name="send_to_huffduffer_title">Title</string>
+    <string name="send_to_huffduffer_description">Description</string>
     
     
 </resources>
