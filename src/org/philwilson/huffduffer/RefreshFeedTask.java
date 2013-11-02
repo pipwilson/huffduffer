@@ -14,6 +14,7 @@ import org.xmlpull.v1.XmlPullParserException;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.webkit.CookieManager;
 
 public class RefreshFeedTask extends AsyncTask<String, Void, String> {
 
@@ -87,12 +88,37 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
         if (Utils.isConnectedToNetwork(parentActivity)) {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            
+            // Set cookies in requests
+            CookieManager cookieManager = CookieManager.getInstance();
+            
+            //String cookie = cookieManager.getCookie(urlString);
+            /*
+            if (cookie != null) {
+                Log.d(TAG, cookie);
+                // conn.setRequestProperty("Cookie", cookie);
+            }
+            */
+            
+            
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
             // Starts the query
             conn.connect();
+
+            /*
+            // Get cookies from responses and save into the cookie manager
+            List<String> cookieList = conn.getHeaderFields().get("Set-Cookie");
+            if (cookieList != null) {
+                for (String cookieTemp : cookieList) {
+                    cookieManager.setCookie(conn.getURL().toString(), cookieTemp);
+                    Log.d(TAG, cookieTemp);
+                }
+            }
+            */
+
             return conn.getInputStream();
         } else {
             throw new IOException("No network connection");
@@ -111,5 +137,5 @@ public class RefreshFeedTask extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String result) {
         ((ItemListActivity) parentActivity).updateTitles();
     }
-    
+
 }

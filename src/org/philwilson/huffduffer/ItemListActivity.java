@@ -95,6 +95,11 @@ public class ItemListActivity extends FragmentActivity implements ItemListFragme
         return true;
     }
     
+    public boolean testPost(MenuItem menuItem) {
+        
+        return true;
+    }
+
     public void updateTitles() {
         ItemListFragment itemListFragment = (ItemListFragment)getSupportFragmentManager().findFragmentById(R.id.item_list);
         itemListFragment.setListAdapter(new ArrayAdapter<AtomFeedParser.Entry>(itemListFragment.getActivity(),

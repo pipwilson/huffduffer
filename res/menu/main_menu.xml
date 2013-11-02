@@ -18,5 +18,11 @@
         android:orderInCategory="102"
         android:title="@string/action_collective">
     </item>
+    <item
+        android:id="@+id/action_test_post"
+        android:onClick="testPost"
+        android:orderInCategory="102"
+        android:title="@string/action_test_post">
+    </item>
 
 </menu>
